@@ -1,3 +1,4 @@
+#Author Vignesh Miriyala
 import graphlab as graphlab
 data = graphlab.SFrame.read_csv('sample_data_label', delimiter='   ', header=False)
 feature_label = []
