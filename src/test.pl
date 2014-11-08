@@ -1,4 +1,3 @@
-#Author Varun Kumar
 #!/usr/bin/perl
 my $result_file = 'varun_rsult.txt';
 open my $result, '>', $result_file
@@ -17,10 +16,10 @@ open my $file_handle2, '<', 'labels_rio2.txt'
   or die "Can't open your_filename: $!\n";
 while (<$file_handle2>)
 {
-if($.==$file[0]){
+if($.==$file[1]){
 chomp;
 @array=split(/,/);
-$index=$array[$file[1]-1];
+$index=$array[$file[0]-1];
 open my $file_handle3, '<', 'spdescrs.txt'
   or die "Can't open your_filename: $!\n";
 #print "   $index\n";
@@ -31,7 +30,7 @@ if($.==$index)
 {
 chomp;
 $line=$_;
-$line.="   $file[2] \n";
+$line.="   $file[2]\n";
 print $result "$line";
 
 
