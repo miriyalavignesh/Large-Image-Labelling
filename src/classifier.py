@@ -4,17 +4,18 @@ import graphlab as graphlab
 import sys
 classes = int(sys.argv[2]) # no. of clasess
 data = []
+feature_count = 59
 for i in range(1,classes+1):
 	data.append( graphlab.SFrame.read_csv('train_class_'+str(i), delimiter='   ', header=False))
 feature_label = []
 
 #59 is the number of features in your training file without the label
-for i in range(1,60):
+for i in range(1,feature_count+1):
 	feature_label.append("X"+str(i))
 
 model = []
 for i in range(0,classes):
-	model.append(graphlab.svm.create(data[i], target='X60', features=feature_label))
+	model.append(graphlab.svm.create(data[i], target='X'+str(feature_count+1), features=feature_label))
 	#print "coefficients::"+ str(model[i-1]['coefficients'])
 #save the model and re-use
 
@@ -43,8 +44,8 @@ for i in range(0,len(predictions[0])):
 			print>>filep[c], 1
 		else:
 			print>>filep[c], 0
-	test_data["X61"] = max_index+1
-print "results::"+str(results)
+#	test_data["X61"] = max_index+1
+#print "results::"+str(results)
 f.close()
 for i in range(0,classes):
 	filep[i].close()
