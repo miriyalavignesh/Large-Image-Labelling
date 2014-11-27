@@ -4,17 +4,18 @@ import graphlab as graphlab
 import sys
 classes = int(sys.argv[2]) # no. of clasess
 data = []
+feature_count = 59
 for i in range(1,classes+1):
 	data.append( graphlab.SFrame.read_csv('train_class_'+str(i), delimiter='   ', header=False))
 feature_label = []
 
 #59 is the number of features in your training file without the label
-for i in range(1,60):
+for i in range(1,feature_count+1):
 	feature_label.append("X"+str(i))
 
 model = []
 for i in range(0,classes):
-	model.append(graphlab.svm.create(data[i], target='X60', features=feature_label))
+	model.append(graphlab.svm.create(data[i], target='X'+str(feature_count+1), features=feature_label))
 	#print "coefficients::"+ str(model[i-1]['coefficients'])
 #save the model and re-use
 
@@ -25,8 +26,12 @@ for i in range(0,classes):
 	predictions.append(model[i].predict(test_data, output_type='margin'))
 
 
-f = open('vibhav_label', 'w')
+f = open('result_label', 'w')
+filep = []
 results = []
+#Classifying into different files for Graph Laplacian One vs All
+for i in range(1,classes+1):
+	filep.append(open('result_label'+str(i),'w'))
 for i in range(0,len(predictions[0])):
 	max_index = 0
 	for j in range(1,classes):
@@ -34,6 +39,13 @@ for i in range(0,len(predictions[0])):
 			max_index = j
 	results.append(max_index+1)
 	print>>f, max_index+1
-	test_data["X61"] = max_index+1
-print "results::"+str(results)
-f.close()	
+	for c in range(0,classes):
+		if(c == max_index):
+			print>>filep[c], 1
+		else:
+			print>>filep[c], 0
+#	test_data["X61"] = max_index+1
+#print "results::"+str(results)
+f.close()
+for i in range(0,classes):
+	filep[i].close()
