@@ -29,14 +29,14 @@ image = cv2.imread("test.jpg")
 
 array = []
 
-with open('labels_rio2.txt') as f:
+with open(sys.argv[1]) as f:
 	for line in f:
 		line = line.rstrip('\n')
 		values = line.split(',')
 		array.append(values)
 
 lookup = []
-with open('vibhav_label') as f1:
+with open('output.txt') as f1:
 	for line1 in f1:
 		line1 = line1.rstrip('\n')
 		lookup.append(line1)

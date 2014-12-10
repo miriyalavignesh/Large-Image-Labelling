@@ -1,3 +1,4 @@
+import sys
 def writeDict(dict, filename, sep):
     with open(filename, "w") as f:
         for i in sorted(dict.keys()):
@@ -13,7 +14,7 @@ def insertNode(adjacency_list,prev,curr):
 		
 array = []
 adjacency_list = {}
-with open('labels_rio2.txt') as f:
+with open(sys.argv[1]) as f:
 	for line in f:
 		line = line.rstrip('\n')
 		values = line.split(',')
@@ -34,4 +35,4 @@ for i in range(0,len(array[0])-1):
 for i in adjacency_list.keys():
 	adjacency_list[i] = set(adjacency_list[i])
 	adjacency_list[i] = sorted(adjacency_list[i])
-writeDict(adjacency_list,"adjacency_list.txt",",")
+writeDict(adjacency_list,"neighbour.txt",",")
